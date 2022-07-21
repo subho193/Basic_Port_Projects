@@ -1,0 +1,85 @@
+/*create table sales
+(
+order_id varchar(20) not null,
+order_date timestamp not null,
+ship_date timestamp not null,
+ship_mode varchar(50) not null,
+customer_id varchar(50) not null,
+customer_name varchar(50) not null,
+segment varchar(50) not null,
+country varchar(50) not null,
+city varchar(50) not null,
+state varchar(50) not null,
+postal_code integer not null,
+region varchar(50) not null,
+product_id varchar(50) not null,
+category varchar(50) not null,
+sub_category varchar(50) not null,
+product_name varchar(500) not null,
+sales float not null
+)
+
+select distinct(ship_mode) from sales;
+
+select ship_mode,round(sum(sales)::numeric,2) from sales
+group by ship_mode
+order by sum(sales) desc;
+
+select segment,round(sum(sales)::numeric,2) from sales
+group by segment
+order by sum(sales) desc;
+
+create view segment_view as
+select * from sales
+where segment='Corporate';
+
+select ship_mode,round(sum(sales)::numeric,2) from segment_view
+group by ship_mode
+order by sum(sales) desc;
+
+select distinct(state) from sales
+order by state asc;
+
+select state,round(sum(sales)::numeric,2) from sales
+group by state
+order by sum(sales) desc;
+
+select region,round(sum(sales)::numeric,2) from sales
+group by region
+order by sum(sales) desc;
+
+select category,round(sum(sales)::numeric,2) from sales
+group by category
+order by sum(sales) desc;
+
+select sub_category,round(sum(sales)::numeric,2) from sales
+group by sub_category
+order by sum(sales) desc;
+
+select postal_code,round(sum(sales)::numeric,2) from sales
+group by postal_code
+order by sum(sales) desc
+limit 5;
+select customer_name,segment,product_name from sales
+where order_date='2017-09-19 00:00:00' and ship_date='2017-09-24 00:00:00';
+
+select order_id,round(sum(sales)::numeric,2) as total_sale from sales
+where ship_mode in (select ship_mode from sales
+					group by ship_mode
+					having sum(sales)>1000
+					limit 1)
+group by order_id
+having sum(sales)>10000
+order by sum(sales) desc
+limit 3;*/
+
+
+
+
+
+
+
+
+
+
+

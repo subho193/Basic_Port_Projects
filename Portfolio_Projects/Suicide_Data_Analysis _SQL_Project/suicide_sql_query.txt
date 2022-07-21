@@ -1,0 +1,29 @@
+/*create table suicide
+(
+state varchar(50) not null,
+year integer not null,
+type_code varchar(50) not null,
+type varchar(100) not null,
+gender varchar(20) not null,
+age_group varchar(20) not null,
+total integer not null
+)*/
+
+select * from suicide;
+
+select distinct(state) from suicide
+order by state desc;
+
+select distinct(gender) from suicide;
+
+select distinct(type) from suicide
+order by type desc;
+
+select distinct(type_code) from suicide
+order by type_code desc;
+
+select type,sum(total) from suicide
+where gender='Male' and state='West Bengal'
+group by type
+order by sum(total) desc
+

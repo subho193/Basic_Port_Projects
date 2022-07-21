@@ -1,0 +1,56 @@
+/*select * from film;
+
+select distinct(rating) as rating from film;
+
+select distinct(rental_duration) as rental_duration from film;
+
+select distinct(rental_rate) as rental_rate from film;
+ 
+select sum(
+	case rental_rate
+		when 2.99 then 1
+		else 0
+		end) as rate_2_99,
+	sum(
+	case rating
+	when 'R' then 1
+	else 0
+	end) as total_R
+from film;
+
+
+select title from film
+where rating='R' and rental_duration=4
+limit 5;
+
+select rating,sum(length) from film
+where rating !='PG-13'
+group by rating
+having sum(length)>20000
+order by sum(length) desc
+;
+
+select rental_rate,sum(rental_duration) from film
+where rating in (select rating from film
+					where rating !='PG-13'
+					group by rating
+					having sum(length)>20000
+					order by sum(length) desc)
+group by rental_rate
+order by sum(rental_duration) desc;
+
+select * from actor;
+
+select * from film_actor;
+
+create view merged_table as
+select film.film_id,actor.actor_id, title,first_name,last_name,rental_duration,rental_rate,length, replacement_cost,rating from film
+join film_actor
+on film.film_id=film_actor.film_id
+join actor
+on film_actor.actor_id=actor.actor_id;*/
+
+select first_name,last_name,title from merged_table
+where title ilike 'King%';
+
+

@@ -1,0 +1,76 @@
+/*
+create table gadget
+(
+order_id integer not null,
+product varchar(100) not null,
+quantity_ordered integer not null,
+price_each float not null,
+order_date timestamp not null,
+purchase_address varchar(200) not null
+);
+
+select * from gadget;
+
+select product,round(sum(price_each)::numeric,2) as total_price from gadget
+group by product
+order by sum(price_each) desc
+limit 10;
+
+select product,sum(quantity_ordered) as total_item from gadget
+group by product
+order by sum(quantity_ordered) desc
+limit 10;
+
+select order_id,sum(quantity_ordered) as total_item from gadget
+group by order_id
+order by sum(quantity_ordered) desc
+limit 10;
+
+select order_id,sum(price_each) as total_price from gadget
+group by order_id
+order by sum(price_each) desc
+limit 10;
+
+select distinct(extract(year from order_date)) as unique_year from gadget;
+
+select extract(year from order_date) as year,round(sum(price_each)::numeric,2) as total_price_per_year from gadget
+group by extract(year from order_date) ;
+
+alter table gadget
+add column year integer;
+
+update gadget
+set 
+year=extract(year from order_date);
+
+select year,round(sum(price_each)::numeric,2) as total_price from gadget
+group by year;
+
+select year,sum(quantity_ordered) as total_quantity from gadget
+group by year;
+
+select * from gadget
+where year=2020;
+
+create view  data_19
+as
+select * from gadget
+where year=2019;
+
+select extract(quarter from order_date) as quarter, round(sum(price_each)::numeric,2) as total_price from data_19
+group by extract(quarter from order_date)
+having sum(price_each)> 7000000
+order by sum(price_each) desc;
+
+select * from gadget
+where purchase_address = '107 Park St, Atlanta, GA 30301';
+
+create view ny_data as
+select * from gadget
+where purchase_address ilike '%NY%';
+
+select product,round(sum(price_each)::numeric,2) from ny_data
+group by product
+order by sum(price_each) desc;
+
+*/
